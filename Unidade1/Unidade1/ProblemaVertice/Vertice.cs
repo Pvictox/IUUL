@@ -10,7 +10,8 @@ namespace Unidade1.ProblemaVertice
     {
         private float X, Y;
 
-        public Vertice(float x, float y)        {
+        public Vertice(float x, float y)
+        {
             this.X = x;
             this.Y = y;
         }
