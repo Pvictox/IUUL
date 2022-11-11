@@ -22,6 +22,27 @@ namespace Unidade1.Formas
         private int idTipoTriangulo = 0;
         private float AreaTriangulo = 0;
 
+        public float Perimetro
+        {
+            get { return perimetro; }
+        }
+
+        public String TipoTriangulo
+        {
+            get {
+                var enumDisplay = (tipoTriangulo)this.idTipoTriangulo;
+                return enumDisplay.ToString();
+            }
+        }
+
+        public float returnAreaTriangulo
+        {
+            get
+            {
+                return AreaTriangulo;
+            }
+        }
+
         public Triangulo(Vertice v1, Vertice v2, Vertice v3)
         {
             if (checkIfTriangule(v1, v2, v3))
@@ -45,16 +66,12 @@ namespace Unidade1.Formas
             float lado1 = this.getMedidasLados().ElementAt(0);
             float lado2 = this.getMedidasLados().ElementAt(1);
             float lado3 = this.getMedidasLados().ElementAt(2);
-            float S = this.getPerimetro() / 2;
+            float S = this.perimetro / 2;
             this.AreaTriangulo = (float)Math.Sqrt( S * (S-lado1) * (S-lado2) * (S-lado3));
 
         }
 
-        public String getTipoTriangulo()
-        {
-            var enumDisplay = (tipoTriangulo)this.idTipoTriangulo;
-            return enumDisplay.ToString();
-        }
+       
         public void assignTipoTriangulo()
         {
             float lado1 = this.getMedidasLados().ElementAt(0);
@@ -77,17 +94,7 @@ namespace Unidade1.Formas
         {
             return this.medidasLados; 
         }
-
-
-        public float getArea()
-        {
-            return this.AreaTriangulo;
-        }
-
-        public float getPerimetro()
-        {
-            return this.perimetro;
-        }
+              
 
         private void calculaPerimetro()
         {
@@ -103,7 +110,7 @@ namespace Unidade1.Formas
             float lado2 = this.getMedidasLados().ElementAt(1);
             float lado3 = this.getMedidasLados().ElementAt(2);
 
-            return "Lado AB = " + lado1 + " | Lado BC = " + lado2 + " | Lado AC = " + lado3 + " | TIPO: "+ this.getTipoTriangulo() +" | Area = "+this.getArea();
+            return "Lado AB = " + lado1 + " | Lado BC = " + lado2 + " | Lado AC = " + lado3 + " | TIPO: "+ this.TipoTriangulo +" | Area = "+this.returnAreaTriangulo;
         }
 
         public List<Vertice> GetVertices() { return this.vertices; }

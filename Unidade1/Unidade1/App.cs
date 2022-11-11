@@ -26,12 +26,13 @@ class App
     {
         int option_user = 1;
         float X, Y;
-        while (option_user != 4)
+        while (option_user != 5)
         {
             Console.WriteLine("=================");
             Console.WriteLine("1 - Problema Piramide");
             Console.WriteLine("2 - Problema Vertice");
             Console.WriteLine("3 - Problema Triangulo");
+            Console.WriteLine("4 - Problema Poligono");
             Console.Write("Digite o valor: ");
             option_user = Convert.ToInt32(Console.ReadLine());
             switch (option_user)
@@ -138,11 +139,68 @@ class App
 
                             case 2:
                                 Console.WriteLine(t1.toString()) ;
-                                Console.WriteLine("Perimetro do triangulo = " + t1.getPerimetro());
+                                Console.WriteLine("Perimetro do triangulo = " + t1.Perimetro);
                                 break;
                         }
                     }
 
+                    break;
+
+                case 4:
+                    v1 = null;
+                    v2 = null;
+                    v3 = null;
+                    getXY(ref v1, 1);
+                    getXY(ref v2, 2);
+                    getXY(ref v3, 3);
+                    try
+                    {
+                        Poligono p1 = new Poligono(v1, v2, v3);
+                        int opcaoPoligono = 1;
+                        while (opcaoPoligono < 4)
+                        {
+                            Console.WriteLine("1 - Adicionar Vertice");
+                            Console.WriteLine("2 - Remover Vertice");
+                            Console.WriteLine("3 - Ver Informaçoes do poligono");
+                            opcaoPoligono = Convert.ToInt32(Console.ReadLine());
+                            switch (opcaoPoligono)
+                            {
+                                case 1:
+                                    Vertice vn = null;
+                                    getXY(ref vn, p1.quantVertices+1);
+                                    if (p1.AddVertice(vn))
+                                    {
+                                        Console.WriteLine("Adicionado Com sucesos");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Falha ao adicionar");
+                                    }
+
+                                    break;
+                                case 2:
+                                    vn = null;
+                                    getXY(ref vn, p1.quantVertices+1);
+                                    try
+                                    {
+                                        p1.RemoveVertice(vn);
+                                    }catch(Exception e)
+                                    {
+                                        Console.WriteLine("Não foi possível excluir");
+                                    }
+                                    break;
+                                case 3:
+                                    Console.WriteLine("Perimetro = " + p1.getPerimetro() + " || Quant. vertices = " + p1.quantVertices);
+                                    break;
+                            }
+                        }
+                        
+                    }
+                    catch(ArgumentNullException e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                    
                     break;
                 default:
                     break;
