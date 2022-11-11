@@ -1,8 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
+using System.Diagnostics.Tracing;
 using System.Xml.Linq;
 using Unidade1.Formas;
+using Unidade1.ProblemaIntervalo;
 using Unidade1.ProblemaVertice;
 using Unidade1.PyramidProblem;
 
@@ -22,17 +24,37 @@ class App
         v1 = new Vertice(X, Y);
     }
 
+    static DateTime getDate(ref int dia, ref int mes, ref int ano, ref int hora, ref int min, ref int seg)
+    {
+        Console.WriteLine("Digite o dia");
+        dia = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Digite o mes");
+        mes = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Digite o ano");
+        ano = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Digite as horas");
+        hora = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Digite os minutos");
+        min = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Digite os segundo");
+        seg = Convert.ToInt32(Console.ReadLine());
+        DateTime data = new DateTime(ano, mes, dia, hora, min, seg);
+        return data;
+
+    }
     static void Main(string[] args)
     {
         int option_user = 1;
         float X, Y;
-        while (option_user != 5)
+        while (option_user < 8)
         {
             Console.WriteLine("=================");
             Console.WriteLine("1 - Problema Piramide");
             Console.WriteLine("2 - Problema Vertice");
             Console.WriteLine("3 - Problema Triangulo");
             Console.WriteLine("4 - Problema Poligono");
+            Console.WriteLine("5 - Problema Intervalo");
+            Console.WriteLine("6 - Problema Lista Intervalo");
             Console.Write("Digite o valor: ");
             option_user = Convert.ToInt32(Console.ReadLine());
             switch (option_user)
@@ -201,6 +223,81 @@ class App
                         Console.WriteLine(e.ToString());
                     }
                     
+                    break;
+
+                case 5:
+                    int dia=0, mes=0, ano = 0, hora = 0, min = 0, seg = 0;
+                    Console.WriteLine("===== DATA INICIAL =====");
+                    DateTime dataInicial = getDate(ref dia, ref mes, ref ano, ref hora, ref min, ref seg);
+                    Console.WriteLine("===== DATA FINAL =====");
+                    DateTime dataFinal = getDate(ref dia, ref mes, ref ano, ref hora, ref min, ref seg);
+
+                    try
+                    {
+                        Intervalo intervalo1 = new Intervalo(dataInicial, dataFinal);
+                        Console.WriteLine("======= CRIAÇÃO DO SEGUNDO INTERVALO ======");
+                        Console.WriteLine("===== DATA INICIAL =====");
+                        dataInicial = getDate(ref dia, ref mes, ref ano, ref hora, ref min, ref seg);
+                        Console.WriteLine("===== DATA FINAL =====");
+                        dataFinal = getDate(ref dia, ref mes, ref ano, ref hora, ref min, ref seg);
+                        Intervalo intervalo2 = new Intervalo(dataInicial, dataFinal);
+                        bool hasIntervalo;
+                        if (intervalo1.TemIntersecao(intervalo2) || intervalo2.TemIntersecao(intervalo1))
+                        {
+                            hasIntervalo= true;
+                        }
+                        else
+                        {
+                            hasIntervalo = false;
+                        }
+                        Console.WriteLine("Tem intevalo = " + hasIntervalo + " | Sao iguais = " + intervalo1.saoIguais(intervalo2));
+                        Console.WriteLine("Duracao Intervalo 1 = " + intervalo1.Duracao) ;
+                        Console.WriteLine("Duracao Intervalo 2 = " + intervalo2.Duracao);
+
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Erro na hora de criar data");
+                    }
+                    break;
+
+                case 6:
+                    int opcaoListaIntervalo = 0;
+                    ListaIntervalo lista = new ListaIntervalo();
+                    while (opcaoListaIntervalo < 3)
+                    {
+                        
+                        dia = 0; mes = 0; ano = 0; hora = 0; min = 0; seg = 0;
+                        Console.WriteLine("1 - Adicionar na lista");
+                        Console.WriteLine("2 - Ver lista");
+                        opcaoListaIntervalo = Convert.ToInt32(Console.ReadLine());
+                        switch(opcaoListaIntervalo)
+                        {
+                            case 1:
+                                Console.WriteLine("===== DATA INICIAL =====");
+                                dataInicial = getDate(ref dia, ref mes, ref ano, ref hora, ref min, ref seg);
+                                Console.WriteLine("===== DATA FINAL =====");
+                                dataFinal = getDate(ref dia, ref mes, ref ano, ref hora, ref min, ref seg);
+                                Intervalo novoIntervalo = new Intervalo(dataInicial, dataFinal);
+                                if (lista.AddIntevalo(novoIntervalo) == false)
+                                {
+                                    Console.WriteLine("Erro ao adicionar devido interssection");
+                                }
+                                else
+                                {
+                                    
+                                    Console.WriteLine("Adicionado");
+                                }
+
+                                break;
+
+                            case 2:
+                                lista.ShowAllIntervalos();
+                                break;
+                        }
+                    }
+                    
+
                     break;
                 default:
                     break;
