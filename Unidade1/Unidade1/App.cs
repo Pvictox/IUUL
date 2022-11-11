@@ -42,6 +42,111 @@ class App
         return data;
 
     }
+
+
+    static void variasEntradas()
+    {
+        bool flag = true;
+        String nome = "";
+        while (flag)
+        {
+            Console.WriteLine("Digite o nome");
+            nome = Console.ReadLine();
+            if (nome.Length >= 5)
+            {
+                flag = false;
+            }
+
+        }
+        flag = true;
+        long cpf = 0;
+        while (flag)
+        {
+            Console.WriteLine("Digite o CPF");
+            cpf = (long)Convert.ToDouble(Console.ReadLine());
+            if (cpf.ToString().Length == 11)
+            {
+                flag = false;
+            }
+
+        }
+        flag = true;
+        DateTime dataNasc = new DateTime();
+        while (flag)
+        {
+            Console.WriteLine("Digite a data de nascimento (DD/MM/AAAA)");
+            String data = Console.ReadLine();
+            String[] subs = data.Split("/");
+            int anoAtual = DateTime.Now.Year;
+            if ((anoAtual - Convert.ToInt32(subs[2])) >= 18){
+                dataNasc = new DateTime(Convert.ToInt32(subs[2]), Convert.ToInt32(subs[1]), Convert.ToInt32(subs[1]));
+                
+                flag = false;
+            }
+            else
+            {
+                Console.WriteLine("Erro. Menor de 18");
+            }
+            
+
+        }
+        flag = true;
+        float floatRenda = 0;
+        while (flag)
+        {
+            Console.WriteLine("Renda mesal");
+            String renda = Console.ReadLine();
+            if (renda.Contains(','))
+            {
+                renda = renda.Replace(',', '.');
+            }
+
+
+            floatRenda = (float)Convert.ToDouble(renda);
+            flag = false;
+        }
+        flag = true;
+        List<Char> possiveisEstados = new List<Char>
+        {
+            'C', 'S', 'V', 'D'
+        };
+        Char estado = Convert.ToChar('a');
+        while (flag)
+        {
+            Console.WriteLine("Estado Civil (C,S,V,D)");
+            estado = Convert.ToChar(Console.ReadLine());
+            foreach (var character in possiveisEstados)
+            {
+                if (estado.Equals(character))
+                {
+                    flag = false; break;
+                }
+            }
+        }
+        flag = true;
+        int dependentes = 0;
+        while (flag)
+        {
+            Console.WriteLine("Dependentes");
+            dependentes = Convert.ToInt32(Console.ReadLine());
+            if (dependentes >=0 && dependentes <= 10)
+            {
+                flag = false;
+            }
+        }
+
+        Console.WriteLine("Nome = > " + nome);
+        Console.WriteLine("CPF = > " + cpf);
+        Console.WriteLine("DT nascimento = > " + dataNasc.Day + "/"+dataNasc.Month+"/"+dataNasc.Year);
+        String mostraRenda = floatRenda.ToString();
+        if (mostraRenda.Contains("."))
+        {
+            mostraRenda = mostraRenda.Replace(".", ",");
+        }
+        Console.WriteLine("Renda => " + mostraRenda);
+        Console.WriteLine("Estado civil => " + estado);
+        Console.WriteLine("Dependetes -> " + dependentes);
+    }
     static void Main(string[] args)
     {
         int option_user = 1;
@@ -55,6 +160,7 @@ class App
             Console.WriteLine("4 - Problema Poligono");
             Console.WriteLine("5 - Problema Intervalo");
             Console.WriteLine("6 - Problema Lista Intervalo");
+            Console.WriteLine("7 - Problema Várias entradas");
             Console.Write("Digite o valor: ");
             option_user = Convert.ToInt32(Console.ReadLine());
             switch (option_user)
@@ -298,6 +404,10 @@ class App
                     }
                     
 
+                    break;
+
+                case 7:
+                    variasEntradas();
                     break;
                 default:
                     break;
